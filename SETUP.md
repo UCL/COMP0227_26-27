@@ -92,6 +92,10 @@ cd pyslam
 The second command downloads pySLAM, in the version the course uses, into the folder `pyslam`
 (about 0.6 GB: `--depth 1` leaves out the project's history).
 
+If you cloned the repository before reading this and the `pyslam` folder is empty, run the
+`git submodule update --init --depth 1 pyslam` line from the `COMP0227_26-27` folder: a plain
+`git clone` does not download pySLAM.
+
 **Run all the commands below from the `pyslam` folder.** If you already have an older pySLAM
 checkout (for example one set up with conda), do not reuse it: use this one.
 
