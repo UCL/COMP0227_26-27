@@ -4,7 +4,7 @@ This page installs pySLAM's **default level** for the course with [pixi](https:/
 odometry, full SLAM with classical and learned features, loop closing (also with learned place
 recognition), g2o/GTSAM optimisation, dense reconstruction and the viewers. Later weeks add more
 levels (depth prediction, semantic segmentation, 3D reconstruction); they are described in
-[pyslam/docs/PIXI.md](./pyslam/docs/PIXI.md).
+[pyslam/docs/PIXI.md](https://github.com/sjulier/pyslam/blob/main/docs/PIXI.md).
 
 pySLAM is in the folder `pyslam` of this repository, as a git submodule: the course uses one fixed
 version of it, which we move forward during the term.
@@ -147,7 +147,7 @@ pixi run slam --headless   # without windows; prints the trajectory error (ATE) 
 keyframe similarity matrix and the loop candidates). Press `q` or `Esc` in the image window to quit.
 
 The other main scripts have tasks too (`pixi run vo`, `pixi run feature-matching`,
-`pixi run map-viewer`, ...); `pixi task list` shows them all, and [PIXI.md](./pyslam/docs/PIXI.md#run) explains
+`pixi run map-viewer`, ...); `pixi task list` shows them all, and [PIXI.md](https://github.com/sjulier/pyslam/blob/main/docs/PIXI.md#run) explains
 how to work in a pixi shell instead.
 
 `pixi run feature-matching` matches the features of an image pair: choose them with `--features`
@@ -203,7 +203,7 @@ windows instead, where `q` quits.
 - **Results vary from run to run.** SLAM runs several threads, so two runs on the same video differ.
   On KITTI 06 the trajectory error (ATE) of monocular SLAM ranged from 11 to 21 m in our tests (several machines). Compare
   methods over several runs. See
-  [non-determinism](./pyslam/docs/TROUBLESHOOTING.md#non-determinism-and-run-to-run-variability).
+  [non-determinism](https://github.com/sjulier/pyslam/blob/main/docs/TROUBLESHOOTING.md#non-determinism-and-run-to-run-variability).
 - **SLAM runs at the camera's frame rate**, also with `--headless`. `--speed 2` plays twice as fast and
   `--speed 0` as fast as possible; faster than the camera, tracking is sometimes lost at the turns.
   Use the default speed when you compare results. With the windows open, the playback slows down by
@@ -258,7 +258,7 @@ windows instead, where `q` quits.
 
 ## Troubleshooting
 
-See [pyslam/docs/TROUBLESHOOTING.md](./pyslam/docs/TROUBLESHOOTING.md) and the
-[good-to-know section of PIXI.md](./pyslam/docs/PIXI.md#good-to-know). When asking for help, include the full
+See [pyslam/docs/TROUBLESHOOTING.md](https://github.com/sjulier/pyslam/blob/main/docs/TROUBLESHOOTING.md) and the
+[good-to-know section of PIXI.md](https://github.com/sjulier/pyslam/blob/main/docs/PIXI.md#good-to-know). When asking for help, include the full
 error message, the command you ran, and the output of `pixi info` and of `pixi run doctor` (one
 line per check: machine, memory, environment, GPU, every native module, vocabulary).
