@@ -7,7 +7,11 @@ This repository is the landing page for COMP0227, which is taught in the autumn 
 ```bash
 # install pixi
 curl -fsSL https://pixi.sh/install.sh | sh
+```
 
+Follow the instructions to make sure that pixi is in your path. Then run:
+
+```bash
 # clone the repo and active the submodule
 git clone https://github.com/UCL/COMP0227_26-27.git
 cd COMP0227_26-27
