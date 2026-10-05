@@ -2,6 +2,8 @@
 
 This repository is the landing page for COMP0227, which is taught in the autumn of 2026.
 
+For this module, we will be using a heavily modified version of [pySLAM](https://github.com/luigifreda/pyslam). Modifications include: remove multiple crashes, memory leaks and an an optimizer stall. It supports many more machine learned features on a Mac. It controls how much material to download at any given time, reduces build times, and introduce more robust heuristics to automatically scale speed and for adaptive feature selection based on quality criteria. It has also been modified to take TUM-style outputs generated from COMP0222 / COMP0249. We expect to continue to modify it to incorporate algorithms such as Amb3r and 4D Gaussian splats.
+
 ## Downloading and installing (cheatsheet version)
 
 ```bash
