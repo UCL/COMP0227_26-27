@@ -19,8 +19,10 @@ git submodule update --init --depth 1 pyslam
 
 ## Then install the software
 
-Follow **[SETUP.md](./SETUP.md)**. Please do this **before** the first lab: it downloads several
+Follow **[SETUP.md](./SETUP.md)**. Please note: it downloads several
 gigabytes. Windows users: read the WSL memory step first.
+
+Please **do not** follow the pySLAM installation instructions; we have wrapped the installation process very differently to make it much faster and more efficient.
 
 ## What is in this repository
 
