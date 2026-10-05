@@ -25,7 +25,7 @@ pixi run models     # the recommended learned models: SuperPoint, LightGlue and 
 ```
 
 **Already cloned, and the `pyslam` folder is empty?** A plain `git clone` does not download pySLAM.
-Run the last command above from the `COMP0227_26-27` folder:
+Run this from the `COMP0227_26-27` folder:
 
 ```bash
 git submodule update --init --depth 1 pyslam
