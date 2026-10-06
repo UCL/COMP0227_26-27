@@ -1,4 +1,4 @@
 [submodule "pyslam"]
 	path = pyslam
 	url = https://github.com/sjulier/pyslam.git
-	branch = main
+	branch = comp0227-2026
