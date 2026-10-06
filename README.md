@@ -16,10 +16,10 @@ curl -fsSL https://pixi.sh/install.sh | sh
 Follow the instructions to make sure that pixi is in your path. Then run:
 
 ```bash
-# clone the repo and active the submodule
+# get the course materials and pySLAM
 git clone https://github.com/UCL/COMP0227_26-27.git
 cd COMP0227_26-27
-git clone --depth 1 --branch comp0227-2026 https://github.com/sjulier/pyslam.git
+git submodule update --init --depth 1 pyslam
 cd pyslam
 
 # install and build
@@ -32,7 +32,7 @@ pixi run models     # the recommended learned models: SuperPoint, LightGlue and 
 Run this from the `COMP0227_26-27` folder:
 
 ```bash
-git clone --init --depth 1 --branch comp0227-2026 https://github.com/sjulier/pyslam.git
+git submodule update --init --depth 1 pyslam
 ```
 
 To install updates:
@@ -40,6 +40,8 @@ To install updates:
 ```bash
 cd COMP0227_26-27
 git pull
+git submodule update --init --depth 1 pyslam
+cd pyslam
 pixi run build
 ```
 
