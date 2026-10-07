@@ -52,6 +52,20 @@ about 12 GB. The rule: `memory` about 4 GB less than the computer's memory (12GB
 - If you are short of memory, `pixi run slam --headless` needs less (about 6 GB).
 - Learned features need much more: see [Good to know](#good-to-know).
 
+### Laptops: plug in, and turn power saving off
+
+SLAM has to keep up with the camera, and a laptop that is saving power may be too slow for it:
+tracking is then lost, or the results are much worse, for no visible reason. Before you run SLAM:
+
+- **plug the laptop in**;
+- **macOS**: turn **Low Power Mode** off (System Settings > Battery);
+- **Windows**: turn **Battery Saver** / Energy Saver off, and choose the "Best performance" power
+  mode (Settings > System > Power & battery).
+
+On a MacBook Air M1, Low Power Mode made tracking take 52-56 ms per frame instead of 21-23 ms (the
+frames of the test video are 104 ms apart, and the slowest frames then took longer than that), and
+two runs lost track that did not with it off.
+
 ### With an NVIDIA GPU: `default` or `default-cpu`?
 
 On Linux and WSL2 with an NVIDIA GPU you can still choose the CPU-only environment
@@ -204,6 +218,8 @@ windows instead, where `q` quits.
   On KITTI 06 the trajectory error (ATE) of monocular SLAM ranged from 11 to 21 m in our tests (several machines). Compare
   methods over several runs. See
   [non-determinism](https://github.com/sjulier/pyslam/blob/main/docs/TROUBLESHOOTING.md#non-determinism-and-run-to-run-variability).
+- **A laptop on battery or in a power-saving mode can be too slow for SLAM**: see
+  [Laptops: plug in, and turn power saving off](#laptops-plug-in-and-turn-power-saving-off).
 - **SLAM runs at the camera's frame rate**, also with `--headless`. `--speed 2` plays twice as fast and
   `--speed 0` as fast as possible; faster than the camera, tracking is sometimes lost at the turns.
   Use the default speed when you compare results. With the windows open, the playback slows down by
