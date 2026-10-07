@@ -13,9 +13,9 @@ pixi installs everything pySLAM needs into the repository folder (`.pixi/`), fro
 everybody gets the same versions. It does not touch conda or the rest of your system, and you do not
 need to install CUDA or a compiler.
 
-> **Do the installation before the lab.** It downloads about 6 GB with an NVIDIA GPU (the environment,
-> 17 GB once unpacked; about 2 GB without one) and compiles pySLAM's C++ modules, which takes from
-> 15 minutes to over an hour.
+> **Do the installation before the lab.** It downloads about 6 GB with an NVIDIA GPU (17 GB once
+> unpacked) and about 2 GB without one. pySLAM's C++ modules come ready-made for every system in the
+> table below; anywhere else they are compiled, which takes from 15 minutes to over an hour.
 
 ## Supported systems
 
@@ -24,13 +24,33 @@ need to install CUDA or a compiler.
 | **Linux** (x86-64), with an NVIDIA GPU | tested, from older GPUs (Pascal, e.g. Titan Xp) to the RTX 50 series |
 | **Linux** (x86-64), without an NVIDIA GPU | tested: add `-e default-cpu` to every `pixi run` command below |
 | **macOS** (Apple silicon, macOS 14 or later) | tested. Learned features use the Apple GPU |
-| **Windows** | via **WSL2** only (Ubuntu inside Windows), then as Linux: tested (Windows 11, WSL2, Titan Xp), including the GPU and the windows of `pixi run slam` |
+| **Windows** (Intel/AMD), native | **experimental** (Windows 11): CPU only, about 15 GB of free disk space (it downloads about 2 GB). Add `-e default-win` to every `pixi run` command below; see [Windows](#windows-native-or-wsl2) |
+| **Windows**, WSL2 | Ubuntu inside Windows, then as Linux: tested (Windows 11; Titan Xp, RTX 2000 Ada), including the GPU and the windows of `pixi run slam` |
 
 You need about **30 GB of free disk space** (less without an NVIDIA GPU) and an internet connection.
-If pySLAM's C++ modules have to be compiled on your machine (see step 3), that also needs about
-**12 GB of free memory** (see [Good to know](#good-to-know)).
 
-### Windows (WSL2): give WSL more memory before your first run
+### Windows: native or WSL2?
+
+- **Native Windows** (**experimental**) is meant for laptops with little memory or disk: no
+  Linux system to install, and pixi installs everything into the `pyslam` folder. It runs on the CPU,
+  and `pixi run slam` needs about 4 GB of memory with its windows (2.6 GB with `--headless`).
+  Install git and pixi in **PowerShell**, then open a new PowerShell window:
+  ```powershell
+  winget install --id Git.Git -e
+  powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+  ```
+  Then follow steps 2 to 4 in PowerShell, with `-e default-win` in every `pixi run` command
+  (`pixi run -e default-win build`, `pixi run -e default-win slam --headless`, ...). The
+  TensorFlow-based features are not available on Windows. Learned features run on the CPU: SuperPoint
+  kept up with KITTI 06 on a recent 20-core laptop, at about half the speed of ORB.
+  It is **experimental** because it has not yet run on the kind of laptop it is meant for, with a slow
+  processor, few cores and 8 GB of memory or less: the test machines were a 20-core laptop with 32 GB
+  and a workstation, both with Windows 11, Intel CPUs and Visual Studio installed (Windows 10 and AMD
+  CPUs are untried too). Please tell us how it goes.
+- **WSL2** (Ubuntu inside Windows) can use an NVIDIA GPU, for the learned features at full speed. It
+  follows the Linux instructions, after the memory step below.
+
+### WSL2: give WSL more memory before your first run
 
 WSL2 only gets **half of your computer's memory** by default, and `pixi run slam` with its windows
 needs about 8 GB: on a laptop with 16 GB of memory it does not fit. The run then stops late in the
@@ -93,6 +113,7 @@ curl -fsSL https://pixi.sh/install.sh | sh
 ```
 
 Open a new terminal, and check with `pixi --version` (0.81 or later). You also need `git`.
+(Native Windows: see [above](#windows-native-or-wsl2).)
 
 ## 2. Get the code
 
@@ -126,16 +147,16 @@ and run `pixi run build` in `pyslam` again (it only does what has changed).
 ## 3. Build
 
 ```bash
-pixi run build      # the environment, pySLAM's C++ modules and the ORB vocabulary
+pixi run build      # the environment, pySLAM's ready-made C++ modules and the ORB vocabulary
 pixi run check      # the C++ modules load and the optimiser tests pass
 pixi run models     # the recommended learned models: SuperPoint, LightGlue and CosPlace (about 0.3 GB)
 ```
 
 - The first `build` downloads the environment (about 6 GB with an NVIDIA GPU): this takes 20 minutes
   or more, mostly **without any output**, which is normal.
-- `build` then installs pySLAM's C++ modules ready-made when there is a prebuilt copy for your system
-  (`[native bundle] installed the prebuilt prereq modules` and `... pyslam modules`, about 30 MB of
-  downloads), and otherwise compiles them, which takes from 15 minutes to over an hour.
+- `build` then installs pySLAM's C++ modules ready-made (`[native bundle] installed the prebuilt
+  prereq modules` and `... pyslam modules`, about 30 MB). If it says it is compiling them instead,
+  something is wrong with your copy: see [Troubleshooting](#troubleshooting).
 - `build` ends by checking that all native modules share one pybind11 ABI (`OK: ... module(s) share ...`).
 - `check` ends with the GTSAM and g2o tests passing.
 - `models` prints one line per component, `OK` with the device it ran on (`cuda`, `mps` or `cpu`),
@@ -233,21 +254,15 @@ windows instead, where `q` quits.
   `pixi run slam --features SUPERPOINT` needs about 22 GB with its windows and about 10 GB with
   `--headless`. On a laptop, run the learned features with `--headless`, or on the lab machines. If
   a run stops with `Killed`, or WSL closes by itself, it ran out of memory: on Windows see
-  [the WSL memory step](#windows-wsl2-give-wsl-more-memory-before-your-first-run).
+  [the WSL memory step](#wsl2-give-wsl-more-memory-before-your-first-run).
 - **Do not press Ctrl+Z during a run.** Under `pixi run` it suspends SLAM but not pixi, and everything
   looks frozen. To stop a run, press `q` in a window, or Ctrl+C in the terminal. (If it happened:
   close the terminal and open a new one.)
-- **Memory for the build.** Compiling GTSAM needs about 12 GB of free memory: a few files of its Python
-  wrapper need up to 12 GB each. The build runs as many compiler jobs as the free memory allows; set
-  `PYSLAM_BUILD_JOBS=1` to build one file at a time. On **Windows**, WSL2 gets only half of the
-  computer's memory by default: if the build stops with `Killed signal terminated program cc1plus`,
-  close other programs, or give WSL more memory (`memory=` and `swap=` in
-  `%UserProfile%\.wslconfig`, then `wsl --shutdown`) and run `pixi run build` again. Single files of
-  GTSAM and of pySLAM's C++ code need up to 12 GB, so on a laptop with 16 GB of memory (WSL2 then gets about 8 GB) give
-  WSL more memory or swap **before** a build from source. None of this applies when `build`
-  installs the prebuilt modules.
-- **Compiler warnings** such as `-Wmaybe-uninitialized` from Eigen during a build from source are
-  harmless (they appear on CPUs with AVX-512).
+- **The console shows the main events only.** Tracking's step-by-step messages go to
+  `logs/tracking.log` (and local mapping's and loop closing's to their own files in `logs/`);
+  `pixi run slam --verbose` prints them on the console too.
+- **Compiling** only happens if you change pySLAM's C++ code (see below). Compiling GTSAM needs about
+  12 GB of free memory; set `PYSLAM_BUILD_JOBS=1` to build one file at a time.
 - **WSL2 and the Rerun viewer** (`pixi run vo`): under WSL2 pySLAM starts Rerun's viewer with its
   software Vulkan renderer (`WGPU_BACKEND=vulkan`), because the default one crashes on WSLg with
   "Invalid surface". To try another renderer, set `WGPU_BACKEND` yourself before `pixi run vo`.
@@ -270,7 +285,8 @@ windows instead, where `q` quits.
 - **Error messages tell you what to do.** If a component is not installed or not built, pySLAM says
   which one and which command installs or builds it.
 - **Not available**: SURF (non-free). The TensorFlow-based features (DELF, LF-Net, ContextDesc,
-  GeoDesc) are not in the default level.
+  GeoDesc, and HDC-DELF place recognition) are installed separately with `pixi run models-tf` (Linux and
+  macOS; several GB more, 6 GB on a Mac): pySLAM runs them in their own environment.
 
 ## Troubleshooting
 

@@ -10,14 +10,16 @@ The code is managed through pixi. This controls how much material to download at
 
 **On a laptop?** Plug it in, and turn off Low Power Mode (macOS) or Battery Saver (Windows) before
 you run SLAM: with power saving on, tracking can be lost. Windows with WSL2: do the
-[WSL memory step](./SETUP.md#windows-wsl2-give-wsl-more-memory-before-your-first-run) first.
+[WSL memory step](./SETUP.md#wsl2-give-wsl-more-memory-before-your-first-run) first.
 
 ```bash
 # install pixi
 curl -fsSL https://pixi.sh/install.sh | sh
 ```
 
-Follow the instructions to make sure that pixi is in your path. Then run:
+Follow the instructions to make sure that pixi is in your path (on Windows without WSL2, see
+[SETUP.md](./SETUP.md#windows-native-or-wsl2): pixi is installed from PowerShell, and every
+`pixi run` command takes `-e default-win`). Then run:
 
 ```bash
 # get the course materials and pySLAM
@@ -52,7 +54,7 @@ pixi run build
 ## Install the software (detailed version)
 
 Follow **[SETUP.md](./SETUP.md)**. Please note: it downloads several
-gigabytes. Windows users: read the WSL memory step first.
+gigabytes. Windows users: choose between native Windows and WSL2 first.
 
 Please **do not** follow the pySLAM installation instructions; we have wrapped the installation process very differently to make it much faster and more efficient.
 
@@ -61,4 +63,5 @@ Please **do not** follow the pySLAM installation instructions; we have wrapped t
 | | |
 |---|---|
 | [SETUP.md](./SETUP.md) | how to install and check the software, and what to do when something goes wrong |
+| [CHANGELOG.md](./CHANGELOG.md) | what changed in each version of the course's pySLAM, and how to update |
 | `pyslam/` | [pySLAM](https://github.com/sjulier/pyslam), the visual SLAM system used in the labs, as a git submodule fixed at the version the course uses. Its own documentation is in `pyslam/docs/` |
