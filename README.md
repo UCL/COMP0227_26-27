@@ -8,6 +8,10 @@ The code is managed through pixi. This controls how much material to download at
 
 ## Downloading and installing (cheatsheet version)
 
+**On a laptop?** Plug it in, and turn off Low Power Mode (macOS) or Battery Saver (Windows) before
+you run SLAM: with power saving on, tracking can be lost. Windows with WSL2: do the
+[WSL memory step](./SETUP.md#windows-wsl2-give-wsl-more-memory-before-your-first-run) first.
+
 ```bash
 # install pixi
 curl -fsSL https://pixi.sh/install.sh | sh
