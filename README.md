@@ -48,7 +48,7 @@ cd COMP0227_26-27
 git pull
 git submodule update --init --depth 1 pyslam
 cd pyslam
-pixi run build
+pixi run build      # always, after every update (native Windows: pixi run -e default-win build)
 ```
 
 ## Install the software (detailed version)

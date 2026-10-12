@@ -142,7 +142,12 @@ git pull
 git submodule update --init --depth 1 pyslam
 ```
 
-and run `pixi run build` in `pyslam` again (it only does what has changed).
+and then **always** run `pixi run build` in `pyslam` (native Windows: `pixi run -e default-win build`). It
+only does what has changed, usually in a minute. Without it the C++ modules of your old version keep
+running with the new Python code: pySLAM then prints a yellow line "... are from an older version than this
+checkout: run `pixi run build`", and `pixi run doctor` reports it. (On a Mac, a missed build after
+comp0227-2026.2 left SLAM loading its vocabulary for 7 minutes before the first frame, which looked like a
+hang.) What changed in each version is in [CHANGELOG.md](./CHANGELOG.md).
 
 ## 3. Build
 
@@ -294,3 +299,12 @@ See [pyslam/docs/TROUBLESHOOTING.md](https://github.com/sjulier/pyslam/blob/main
 [good-to-know section of PIXI.md](https://github.com/sjulier/pyslam/blob/main/docs/PIXI.md#good-to-know). When asking for help, include the full
 error message, the command you ran, and the output of `pixi info` and of `pixi run doctor` (one
 line per check: machine, memory, environment, GPU, every native module, vocabulary).
+
+Two problems seen on course laptops:
+
+- **SLAM sits for minutes at "Setting up the loop-closing process ..." before the first frame** (or
+  pySLAM prints "... are from an older version than this checkout"): the C++ modules are older than the
+  code. Run `pixi run build`.
+- **macOS: `Could not find the Qt platform plugin "cocoa"`** when a window opens: the files in `.pixi`
+  have been marked hidden (cause unknown), and Qt skips hidden plugins. `pixi run doctor` says so ("Qt
+  plugins"). Fix, in `pyslam`: `chflags -R nohidden .pixi`.

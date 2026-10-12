@@ -8,11 +8,38 @@ lists what changed for you in each version, newest first. To update to the lates
 git pull
 git submodule update --init --depth 1 pyslam
 cd pyslam
-pixi run build          # native Windows: pixi run -e default-win build
+pixi run build          # always; native Windows: pixi run -e default-win build
 ```
 
 `build` brings the environment up to date and installs the new ready-made C++ modules; nothing you
-installed before (models, data) is lost.
+installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
+version keep running with the new code (since comp0227-2026.3 pySLAM warns about it).
+
+## comp0227-2026.3 (12 October 2026)
+
+**Updating**
+- pySLAM now prints a yellow warning, and `pixi run doctor` a FAIL, when its C++ modules are older than the
+  code: run `pixi run build`. On a Mac, modules left over from before comp0227-2026.2 made SLAM spend about
+  7 minutes loading its vocabulary before the first frame, which looked like a hang.
+- macOS: `pixi run doctor` finds the files of `.pixi` marked hidden, which stops windows from opening
+  (`Could not find the Qt platform plugin "cocoa"`), and gives the fix: `chflags -R nohidden .pixi`.
+
+**Lab 02: semantic segmentation**
+- `pixi run semantic-segmentation` segments one image (`--test kitti`, `--image FILE`) or a sequence
+  (`--video`, `--images`, `--tum`) and can save the label maps (`--save DIR`). DeepLabV3 runs at the
+  default level; SegFormer, YOLO, RF-DETR, CLIP and Detic need the semantics level
+  (`pixi run -e semantics ...`). `--list` lists the methods.
+- `pixi run slam --semantic-mask DIR` keeps the detector off the masked classes (people and vehicles by
+  default; `--mask-classes`, `--mask-dilation`, `--mask-after-init`), also on the right image of a stereo
+  pair. `pixi run slam-evaluation --semantic-mask DIR` compares SLAM with and without the mask.
+
+**Running**
+- Monocular SLAM: the final trajectory's frames now follow the map's later scale changes (after a loop
+  closure), as their keyframes do. The trajectory as ORB-SLAM2/3 compute it is saved next to it
+  (`trajectory_final_as_tracked.txt`) with its error, to compare. Stereo and RGB-D are unchanged.
+- Loop closing: when a new loop came while the global bundle adjustment of the previous one was still
+  running, no later global bundle adjustment reached the map (Linux). Fixed.
+- `slam-evaluation` finds KITTI sequences under `<dataset_base_path>/sequences/`, as SLAM does.
 
 ## comp0227-2026.2 (7 October 2026)
 
