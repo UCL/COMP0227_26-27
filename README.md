@@ -51,6 +51,14 @@ cd pyslam
 pixi run build      # always, after every update (native Windows: pixi run -e default-win build)
 ```
 
+Short of disk space? pixi keeps a copy of every package it downloaded, next to the environments
+it built from them. Deleting the copy frees several gigabytes and breaks nothing; pixi downloads a
+package again only if a later install needs it:
+
+```bash
+pixi clean cache
+```
+
 ## Install the software (detailed version)
 
 Follow **[SETUP.md](./SETUP.md)**. Please note: it downloads several

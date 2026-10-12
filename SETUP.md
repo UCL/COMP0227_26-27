@@ -279,6 +279,11 @@ windows instead, where `q` quits.
 - **WSL2: only some of the windows open**, or none: Windows' display for Linux programs (WSLg) may have
   stopped responding. Close the Ubuntu terminals, run `wsl --shutdown` in PowerShell and start again. If
   it happens again, try `QT_QPA_PLATFORM=xcb pixi run slam`.
+- **Short of disk space?** pixi keeps a copy of every downloaded package in its cache
+  (`~/.cache/rattler` on Linux, `~/Library/Caches/rattler` on macOS), separate from the environment
+  in `.pixi/`. `pixi clean cache` deletes that copy (several gigabytes) and breaks nothing: pixi
+  downloads a package again only if a later install needs it. Each further level (`semantics`,
+  `depth`) is another environment of a similar size to the default one.
 - **Do not `pip install` into the environment** and do not run `./clean.sh` casually: it deletes the
   build folders, and rebuilding takes up to an hour.
 - **If you change pySLAM's C++ code, rebuild with `pixi run build`**, never with a module's own
