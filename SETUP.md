@@ -146,8 +146,8 @@ and then **always** run `pixi run build` in `pyslam` (native Windows: `pixi run 
 only does what has changed, usually in a minute. Without it the C++ modules of your old version keep
 running with the new Python code: pySLAM then prints a yellow line "... are from an older version than this
 checkout: run `pixi run build`", and `pixi run doctor` reports it. (On a Mac, a missed build after
-comp0227-2026.2 left SLAM loading its vocabulary for 7 minutes before the first frame, which looked like a
-hang.) What changed in each version is in [CHANGELOG.md](./CHANGELOG.md).
+the Lab 01 version, comp0227-2026-lab01, left SLAM loading its vocabulary for 7 minutes before the first
+frame, which looked like a hang.) What changed in each version is in [CHANGELOG.md](./CHANGELOG.md).
 
 ## 3. Build
 
