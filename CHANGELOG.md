@@ -15,6 +15,33 @@ pixi run build          # always; native Windows: pixi run -e default-win build
 installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
 version keep running with the new code (since comp0227-2026.3 pySLAM warns about it).
 
+## comp0227-2026.4 (20 October 2026)
+
+**Updating**
+- `pixi run build` after updating, as always. Nothing compiles: the ready-made C++ modules are those of Lab 02.
+
+**Lab 03: depth in images and in SLAM**
+- `pixi run -e depth depth-prediction` predicts the depth of one image (`--test kitti`, `--image FILE`;
+  `--method DEPTH_ANYTHING_V2 | DEPTH_ANYTHING_V3 | DEPTH_PRO`, `--scene indoor|outdoor`, `--size`) or of a
+  whole sequence (`--tum`, `--video`, `--images`), scores it against the sequence's own depth images
+  (AbsRel, delta < 1.25, median scale; as the network gives it and with its scale removed), and saves the
+  maps for SLAM (`--save NAME`, read back with `--load NAME`). `--keypoints METHOD` reads the depth at the
+  ORB keypoints through `pyslam/depth_estimation/depth_sampling.py`, the function you complete in Activity 6.
+  `--list` lists the methods. `--load` runs at the default level, also on native Windows; the networks need
+  the `depth` level (`pixi run -e depth models-depth`, about 7 GB of weights; `models-depth-small` installs
+  only the small Depth Anything V2 models, 0.2 GB).
+- `pixi run slam-evaluation --predicted-depth LIST` runs monocular, RGB-D and pseudo-RGB-D SLAM on a TUM
+  sequence in one report; `pixi run python scripts/trajectory_errors.py RESULTS` recomputes every run's
+  trajectory error without and with a fitted scale, and prints the scale.
+- `--associations` and `--predicted-depth` accept the name of the list or a path inside the sequence folder.
+  `--mask-classes "tv monitor"` (a class name with a space) now reaches SLAM intact.
+
+**Depth networks in metres**
+- Depth Anything V2's metric models gave depths 2x too long indoors and 1.6x outdoors (the wrong maximum
+  depth), Depth Anything 3's metric scaling used the wrong focal length, and both were given BGR images as if
+  RGB: all fixed. Depth Pro runs on a Mac's GPU (2 s per image instead of 37 s) and reports the focal length it
+  used or estimated.
+
 ## comp0227-2026.3 (12 October 2026)
 
 **Updating**
