@@ -37,8 +37,8 @@ version keep running with the new code (since comp0227-2026.3 pySLAM warns about
   `--mask-classes "tv monitor"` (a class name with a space) now reaches SLAM intact.
 
 **Depth networks in metres**
-- Depth Anything V2's metric models gave depths 2x too long indoors and 1.6x outdoors (the wrong maximum
-  depth), Depth Anything 3's metric scaling used the wrong focal length, and both were given BGR images as if
+- Depth Anything V2's metric models gave depths 2x too short indoors and 1.6x too short outdoors (the wrong
+  maximum depth), Depth Anything 3's metric scaling used the wrong focal length, and both were given BGR images as if
   RGB: all fixed. Depth Pro runs on a Mac's GPU (2 s per image instead of 37 s) and reports the focal length it
   used or estimated.
 
