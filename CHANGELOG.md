@@ -17,6 +17,20 @@ pixi run build          # always; native Windows: pixi run -e default-win build
 installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
 version keep running with the new code (since comp0227-2026-lab02 pySLAM warns about it).
 
+## comp0227-2026-lab03.1 (20 October 2026, hotfix)
+
+**Updating**
+- `pixi run build` after updating, as always. Nothing compiles: the ready-made C++ modules are those of Lab 02.
+- If `pixi run -e depth models-depth` ended with `4/5 components of 'depth' OK` and `Not installed: RAFT-Stereo`,
+  run it again after updating: it downloads only RAFT-Stereo's weights (192 MB). RAFT-Stereo is a stereo
+  network that Lab 03 does not use, so the lab itself was not affected.
+
+**Setting up**
+- A fresh Ubuntu, such as a new WSL2 install, has no `unzip`. `pixi run -e depth models-depth` then could not
+  unpack RAFT-Stereo's weights (`unzip: command not found`) and reported that component as not installed, and
+  `scripts/download_replica.sh` would have stopped after its 12 GB download. Both now unpack the zip with
+  Python when there is no `unzip`. Nothing else changed since comp0227-2026-lab03.
+
 ## comp0227-2026-lab03 (20 October 2026)
 
 **Updating**
