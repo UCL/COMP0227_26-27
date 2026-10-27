@@ -17,6 +17,42 @@ pixi run build          # always; native Windows: pixi run -e default-win build
 installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
 version keep running with the new code (since comp0227-2026-lab02 pySLAM warns about it).
 
+## comp0227-2026-lab04 (27 October 2026)
+
+**Updating**
+- `pixi run build` after updating, as always. Nothing compiles: the ready-made C++ modules are those of Lab 02.
+- Lab 04 needs the `semantics` level and three networks: `pixi run -e semantics models-detection` installs the
+  level first if you do not have it (about 6 GB), then downloads the weights (0.35 GB) and checks each network
+  (`3/3 components of 'detection' OK`). Part 2 also needs your copy of Replica `room0`; with `R` set to its
+  folder, `pixi run -e semantics models-detection --set ../Labs/Lab_04_-_Things_in_Images/room0 --images $R`
+  checks it (`4/4`).
+
+**Lab 04: things in images, masks and boxes**
+- `pixi run -e semantics object-detection` runs YOLO, YOLOE (classes named with `--prompt`) or SAM (a mask for
+  `--point` or `--box`) on one image (`--test`, `--image`), on a labelled set (`--evaluate DIR --images PATH`:
+  AP50 per class, mAP50 and mAP50:95), or on a sequence (`--tum`, `--video`, `--images`; `--save DIR` keeps
+  the detections). `--nms own` uses `nms()` in `pyslam/semantics/detection_utils.py`, the function you write
+  in Activity 5. `--list` lists the methods and COCO's 80 classes.
+- The labelled set of Part 2 is in this repository, `Labs/Lab_04_-_Things_in_Images/room0`: the true boxes of
+  59 Replica `room0` images. The images themselves come from your own copy of Replica.
+- `pixi run slam ... --detections DIR` lifts the saved detections into the map with each frame's pose and
+  depth, draws them in the Map Viewer, and at the end merges them into objects (`--merge-radius`,
+  `--lift-depth median|centre`, `--min-score`).
+
+**Semantic segmentation (Lab 02)**
+- The `YOLO` method was given its images with red and blue swapped; it now gets them the right way round, so
+  its results change.
+- `semantic-segmentation` now says why a method cannot run: it needs another level, its models are not
+  installed yet, or it does not exist on native Windows.
+- `CLIP` runs through `open_clip` with the same OpenAI weight file (934 MB), with the same labels and speed;
+  `f3rm` is no longer installed.
+
+**Running**
+- On native Windows, `slam-evaluation` now also keeps the thread stacks of a frozen run in its log.
+- If a SLAM run stops part-way and uses no CPU (the rare freeze in `docs/TROUBLESHOOTING.md`), Ctrl-C does not
+  stop it. Close the terminal (on Linux and macOS, Ctrl-\ also works), open a new one, set `R` and `S` again,
+  and run the command again.
+
 ## comp0227-2026-lab03.1 (20 October 2026, hotfix)
 
 **Updating**
