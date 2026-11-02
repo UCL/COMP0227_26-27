@@ -10,12 +10,45 @@ the old numbers are given in brackets. To update to the latest one, from the
 git pull
 git submodule update --init --depth 1 pyslam
 cd pyslam
-pixi run build          # always; native Windows: pixi run -e default-win build
+pixi run build          # always, on every platform (native Windows too, since comp0227-2026-lab05)
 ```
 
 `build` brings the environment up to date and installs the new ready-made C++ modules; nothing you
 installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
 version keep running with the new code (since comp0227-2026-lab02 pySLAM warns about it).
+
+## comp0227-2026-lab05 (2 November 2026)
+
+**Updating**
+- `pixi run build` after updating, as always. Native Windows now types the same commands as Linux and macOS:
+  `pixi run build`, `pixi run slam`, `pixi run -e semantics ...`. `-e default-win` from earlier sheets still works.
+- This version has new C++ modules, because of the freeze fix below. `build` downloads them ready-made (2-3 MB)
+  on Linux, macOS and native Windows; nothing compiles.
+- The `semantics` level gains one small package for the trackers, `lap` (1.4 MB), which pixi installs the first
+  time you use the level after the update. The detector's weights are Lab 04's (`models-detection`).
+- **Native Windows now has the `semantics` level**, with the detectors and trackers (YOLO, YOLOE, SAM, SORT,
+  ByteTrack, BoT-SORT) and SegFormer and CLIP for segmentation. It runs on the CPU. The depth models, Detic and
+  the other detectron2 methods are still Linux and macOS only, and say so.
+
+**Lab 05: objects over time**
+- `pixi run -e semantics object-tracking` tracks the objects of a sequence (`--tum`, `--video`, `--images`) with
+  ByteTrack, BoT-SORT or SORT (`--tracker BYTETRACK|BOTSORT|SORT`) on YOLO's or YOLOE's detections, in two
+  windows, `Tracks` and `Timeline`. `--second-stage off` turns off ByteTrack's and BoT-SORT's matching of
+  low-score boxes. The trackers' settings files are `settings/trackers/bytetrack.yaml`, `botsort.yaml` and
+  `sort.yaml`.
+- `--predict own` uses `predict_box()` in `pyslam/semantics/track_utils.py`, the function you write in Activity 4.
+- `--save DIR` keeps the tracks. `--evaluate DIR` scores a tracker on a MOTChallenge sequence (MOTA, IDF1, HOTA).
+- `pixi run slam ... --tracks DIR` lifts the saved tracks into the map with each frame's pose and depth, draws
+  each identity's path in the Map Viewer, and at the end merges the static tracks into objects
+  (`--static-radius`, `--merge-radius`), with the merge of Lab 04's `--detections`.
+
+**Fixes**
+- **The freeze is fixed.** Now and then a SLAM run stopped advancing, used no CPU and ignored Ctrl-C. The cause
+  was a deadlock between Python and the local map, and it no longer happens. If a run still freezes, close the
+  terminal, run the command again, and tell us.
+- macOS: `pixi run doctor` now reports hidden `.pth` files ("pyslam package"), which make Python ignore pySLAM's
+  own install (`No module named 'pyslam'` outside the pySLAM folder). TROUBLESHOOTING gives the `chflags`
+  command that fixes them.
 
 ## comp0227-2026-lab04 (27 October 2026)
 
