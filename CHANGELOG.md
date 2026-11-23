@@ -8,7 +8,7 @@ the old numbers are given in brackets. To update to the latest one, from the
 
 ```bash
 git pull
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 cd pyslam
 pixi run build          # always, on every platform (native Windows too, since comp0227-2026-lab05)
 ```
@@ -16,6 +16,27 @@ pixi run build          # always, on every platform (native Windows too, since c
 `build` brings the environment up to date and installs the new ready-made C++ modules; nothing you
 installed before (models, data) is lost. **Do not skip it:** without it the C++ modules of your old
 version keep running with the new code (since comp0227-2026-lab02 pySLAM warns about it).
+
+## comp0227-2026-lab06 (24 November 2026)
+
+**Updating**
+- Update with `git submodule update --init --depth 1 pyslam replica`: **`replica` is new**, the Replica
+  renderer the simulator draws with (13 MB). Do not add `--recursive`. Then `pixi run build`, as always.
+- pySLAM's code is Lab 05's. The default level gains the renderer's two packages (`wgpu-py`, `pyglfw`), so
+  `build` installs them and downloads new ready-made C++ modules (about 30 MB); nothing compiles.
+- On Linux, `-e full` gains `gsplat`, for training Gaussian splats on an NVIDIA GPU (Lab 06, Activity 4).
+- Native Windows: on a UCL-managed laptop, Microsoft Defender may block the Python that pixi installs
+  ("Access is denied"). Use WSL2 there.
+
+**Lab 06: dense models of rooms**
+- New folders `sim/` and `configs/`: a simulated robot in a Replica room, with pySLAM, and the tools to build
+  dense models from its runs (`tsdf.py`, `splat.py`, `view_splat.py`). See [sim/README.md](./sim/README.md).
+- The room and the provided run go in `data/` (not in the repository); the sheet says where to download them.
+
+**Fixes**
+- Linux, CPU levels: on a machine with a system-wide CUDA compiler (`/usr/bin/nvcc`), building pySLAM's C++
+  core picked the system Python instead of pixi's and failed (`pyconfig.h: No such file`). If that happened to
+  you, run `./clean.sh` in `pyslam`, then `pixi run build`.
 
 ## comp0227-2026-lab05 (2 November 2026)
 
