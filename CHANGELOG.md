@@ -21,7 +21,7 @@ version keep running with the new code (since comp0227-2026-lab02 pySLAM warns a
 
 **Updating**
 - Update with `git submodule update --init --depth 1 pyslam replica`: **`replica` is new**, the Replica
-  renderer the simulator draws with (13 MB). Do not add `--recursive`. Then `pixi run build`, as always.
+  renderer the simulator draws with (7 MB). Do not add `--recursive`. Then `pixi run build`, as always.
 - pySLAM's code is Lab 05's. The default level gains the renderer's two packages (`wgpu-py`, `pyglfw`), so
   `build` installs them and downloads new ready-made C++ modules (about 30 MB); nothing compiles.
 - On Linux, `-e full` gains `gsplat`, for training Gaussian splats on an NVIDIA GPU (Lab 06, Activity 4).

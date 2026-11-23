@@ -126,7 +126,7 @@ cd pyslam
 
 The third command downloads pySLAM, in the version the course uses, into the folder `pyslam`
 (about 0.6 GB: `--depth 1` leaves out the project's history), and, from Lab 06, the Replica renderer
-the simulator uses into `replica` (13 MB). Do not add `--recursive`: the renderer's own submodules are
+the simulator uses into `replica` (7 MB). Do not add `--recursive`: the renderer's own submodules are
 large and not needed.
 
 If you cloned the repository before reading this and the `pyslam` or `replica` folder is empty, run the
