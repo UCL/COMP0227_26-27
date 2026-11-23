@@ -120,15 +120,17 @@ Open a new terminal, and check with `pixi --version` (0.81 or later). You also n
 ```bash
 git clone https://github.com/UCL/COMP0227_26-27.git
 cd COMP0227_26-27
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 cd pyslam
 ```
 
-The second command downloads pySLAM, in the version the course uses, into the folder `pyslam`
-(about 0.6 GB: `--depth 1` leaves out the project's history).
+The third command downloads pySLAM, in the version the course uses, into the folder `pyslam`
+(about 0.6 GB: `--depth 1` leaves out the project's history), and, from Lab 06, the Replica renderer
+the simulator uses into `replica` (7 MB). Do not add `--recursive`: the renderer's own submodules are
+large and not needed.
 
-If you cloned the repository before reading this and the `pyslam` folder is empty, run the
-`git submodule update --init --depth 1 pyslam` line from the `COMP0227_26-27` folder: a plain
+If you cloned the repository before reading this and the `pyslam` or `replica` folder is empty, run the
+`git submodule update --init --depth 1 pyslam replica` line from the `COMP0227_26-27` folder: a plain
 `git clone` does not download pySLAM.
 
 **Run all the commands below from the `pyslam` folder.** If you already have an older pySLAM
@@ -139,7 +141,7 @@ When we announce a new version, update with:
 ```bash
 cd COMP0227_26-27
 git pull
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 ```
 
 and then **always** run `pixi run build` in `pyslam` (native Windows: `pixi run -e default-win build`). It

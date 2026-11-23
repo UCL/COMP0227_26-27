@@ -221,3 +221,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# The simulator's scenes and saved runs: large, downloaded or made by you
+/data/
+/runs/

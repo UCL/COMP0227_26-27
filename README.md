@@ -25,7 +25,7 @@ Follow the instructions to make sure that pixi is in your path (on Windows witho
 # get the course materials and pySLAM
 git clone https://github.com/UCL/COMP0227_26-27.git
 cd COMP0227_26-27
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 cd pyslam
 
 # install and build
@@ -34,11 +34,11 @@ pixi run check      # the C++ modules load and the optimiser tests pass
 pixi run models     # the recommended learned models: SuperPoint, LightGlue and CosPlace (about 0.3 GB)
 ```
 
-**Already cloned, and the `pyslam` folder is empty?** A plain `git clone` does not download pySLAM.
-Run this from the `COMP0227_26-27` folder:
+**Already cloned, and the `pyslam` or `replica` folder is empty?** A plain `git clone` does not download
+them. Run this from the `COMP0227_26-27` folder:
 
 ```bash
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 ```
 
 To install updates:
@@ -46,7 +46,7 @@ To install updates:
 ```bash
 cd COMP0227_26-27
 git pull
-git submodule update --init --depth 1 pyslam
+git submodule update --init --depth 1 pyslam replica
 cd pyslam
 pixi run build      # always, after every update (native Windows: pixi run -e default-win build)
 ```
@@ -72,4 +72,7 @@ Please **do not** follow the pySLAM installation instructions; we have wrapped t
 |---|---|
 | [SETUP.md](./SETUP.md) | how to install and check the software, and what to do when something goes wrong |
 | [CHANGELOG.md](./CHANGELOG.md) | what changed in each version of the course's pySLAM, and how to update |
+| `sim/`, `configs/` | the robot simulator (from Lab 06): see [sim/README.md](./sim/README.md) |
+| `replica/` | the [Replica renderer](https://github.com/sjulier/Replica-Dataset) the simulator draws with, as a git submodule. Do not use `--recursive`: its own submodules are not needed |
+| `data/` | not in the repository: the simulator's rooms and your saved runs go here |
 | `pyslam/` | [pySLAM](https://github.com/sjulier/pyslam), the visual SLAM system used in the labs, as a git submodule fixed at the version the course uses. Its own documentation is in `pyslam/docs/` |

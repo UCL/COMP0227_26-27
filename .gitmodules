@@ -2,3 +2,7 @@
 	path = pyslam
 	url = https://github.com/sjulier/pyslam.git
 	branch = comp0227-2026
+[submodule "replica"]
+	path = replica
+	url = https://github.com/sjulier/Replica-Dataset.git
+	branch = main
