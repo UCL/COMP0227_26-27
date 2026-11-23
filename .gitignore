@@ -224,3 +224,4 @@ __marimo__/
 
 # The simulator's scenes and saved runs: large, downloaded or made by you
 /data/
+/runs/
